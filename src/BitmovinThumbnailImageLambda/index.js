@@ -28,7 +28,11 @@ const transferThumbToS3 = (res, message) => {
   const outputUrl = message.payload.outputUrl
   const bucket = process.env.STAGING_VIDEO_BUCKET
   const key = 'bitmovin/' + outputUrl.match(/[0-9]{2,}_[A-z 0-9]+$/)[0] + '/thumb.png';
-  const s3 = new AWS.S3();
+  const s3 = new AWS.S3({
+                  region: 'us-east-1',
+                  accessKeyId: process.env.AWS_KEY,
+                  secretAccessKey: process.env.AWS_SECRECY_KEY
+                        });
 
   let params = {
     Bucket: bucket,
