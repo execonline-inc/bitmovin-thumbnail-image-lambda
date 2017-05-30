@@ -9,63 +9,61 @@ function processMessage(event) {
   return message;
 }
 
-function entry(event, context, callback) {
-  const bit = new BitmovinThumbnailImageLambda();
-  const message = processMessage(event);
-  return bit.start(message)
-    .then((result) => {
-      console.log('Successfully transferred thumbnail', result);
-      let message = {
-        statusCode: 200,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: "Success, " + JSON.stringify(result)
-      }
-      callback(null, message)
-    })
-    .catch((error) =>{
-      console.log("ERROR failed to transfer thumbnail to S3", error);
-      let message = {
+async function entry(event, context, callback) {
+  let response = {};
+  try{
+    const bit = new BitmovinThumbnailImageLambda();
+    const message = processMessage(event);
+    const createThumbnail = await bit.start(message);
+    console.log('Successfully transferred thumbnail', createThumbnail);
+    response = {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: "Success, " + JSON.stringify(createThumbnail)
+    }
+    
+  }catch(error){
+    console.log("ERROR failed to transfer thumbnail to S3", error);
+    response = {
         statusCode: 500,
         headers: {
           "Content-Type": "application/json"
         },
         body: "Error, " + JSON.stringify(error)
       }
-      callback(null, message)
-    }
-  );
+  }
+  callback(null, response)
 }
 
-function test() {
-  const bit = new BitmovinThumbnailImageLambda();
-  const event = jf.readFileSync('event.json');
-  const message = processMessage(event);
-   return bit.start(message)
-    .then((result) => {
-      console.log('Successfully transferred thumbnail', result);
-      let message = {
-        statusCode: 200,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: "Success, " + JSON.stringify(result)
-      }
-      callback(null, message)
-    })
-    .catch((error) =>{
-      console.log("ERROR failed to transfer thumbnail to S3", error);
-      let message = {
+async function test(realEvent, context, callback) {
+  let response = {};
+  try{
+    const bit = new BitmovinThumbnailImageLambda();
+    const event = jf.readFileSync('event.json');
+    const message = processMessage(event);
+    const createThumbnail = await bit.start(message);
+    console.log('Successfully transferred thumbnail', createThumbnail);
+    response = {
+      statusCode: 200,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: "Success, " + JSON.stringify(createThumbnail)
+    }
+    
+  }catch(error){
+    console.log("ERROR failed to transfer thumbnail to S3", error);
+    response = {
         statusCode: 500,
         headers: {
           "Content-Type": "application/json"
         },
         body: "Error, " + JSON.stringify(error)
       }
-      callback(null, message)
-    }
-  );
+  }
+  callback(null, response)
 }
 
 module.exports = {
