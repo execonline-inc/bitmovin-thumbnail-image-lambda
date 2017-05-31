@@ -20,7 +20,7 @@ function entry(event, context, callback) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: result
+        body: "Success, " + JSON.stringify(result)
       }
       callback(null, message)
     })
@@ -31,7 +31,7 @@ function entry(event, context, callback) {
         headers: {
           "Content-Type": "application/json"
         },
-        body: error
+        body: "Error, " + JSON.stringify(error)
       }
       callback(null, message)
     }
@@ -42,7 +42,7 @@ function test() {
   const bit = new BitmovinThumbnailImageLambda();
   const event = jf.readFileSync('event.json');
   const message = processMessage(event);
-  return bit.start(message)
+   return bit.start(message)
     .then((result) => {
       console.log('Successfully transferred thumbnail', result);
       let message = {
@@ -50,9 +50,9 @@ function test() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: result
+        body: "Success, " + JSON.stringify(result)
       }
-      return message
+      callback(null, message)
     })
     .catch((error) =>{
       console.log("ERROR failed to transfer thumbnail to S3", error);
@@ -61,9 +61,9 @@ function test() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: error
+        body: "Error, " + JSON.stringify(error)
       }
-      return message
+      callback(null, message)
     }
   );
 }
