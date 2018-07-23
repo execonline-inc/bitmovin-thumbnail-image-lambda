@@ -3,7 +3,7 @@ Creates a thumbnail image for encoded bitmovin videos
 
 # Setup
 
-`npm install`
+`yarn install`
 
 # Deploy
 
@@ -13,10 +13,12 @@ Creates a thumbnail image for encoded bitmovin videos
 
 ## Staging
 
+1. Make sure you have permission to deploy first. We use assume-role.
 1. `serverless deploy --stage staging --verbose`
 1. Configure lambda: add any environment variables and values, adjust the timeout if needed (up to 5 minutes), enable a trigger for your function, add a test event (json).
 
 ## Production
 
+1. Make sure you have permission to deploy first. We use assume-role.
 1. `serverless deploy --stage production --verbose`
 1. Configure lambda: add any environment variables and values, adjust the timeout if needed (up to 5 minutes), enable a trigger for your function, add a test event (json).
