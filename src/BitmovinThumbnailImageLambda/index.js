@@ -3,7 +3,7 @@ const createThumb = (message) => {
   const bitcodin = require('bitcodin')(process.env.BITMOVIN_API_TOKEN);
   const thumbnailConfiguration = {
     "jobId": parseInt(jobId),
-    "height": 320,
+    "height": 360,
     "position": 6,
     "filename": "thumb.png",
     "async": true
@@ -19,7 +19,7 @@ const getThumb = (result) => {
     encoding: null,
     resolveWithFullResponse: true
   }
-  console.log('Successfully requested thumb')
+  console.log('Successfully requested thumb from bitmovin server')
   return rp(requestParams);
 }
 

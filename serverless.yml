@@ -2,7 +2,7 @@ service: bitmovin-thumbnail-image-lambda
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs8.10
   timeout: 120
 
 region: us-east-1
