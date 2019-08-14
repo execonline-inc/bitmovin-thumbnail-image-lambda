@@ -1,3 +1,4 @@
+****** This repository is deprecated *****
 # bitmovin-thumbnail-image-lambda
 Creates a thumbnail image for encoded bitmovin videos
 
